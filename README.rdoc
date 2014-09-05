@@ -1,28 +1,36 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+==== Background
+The purpose of this repo and this guide is to get you up and running with a Rails project that already has CKEditor with pbckcode. What follows are step-by-step instructions on how to reproduce this environment.
 
-Things you may want to cover:
+==== Steps to Reproduce
+ $ rbenv version
+   2.1.2 (set by /opt/boxen/rbenv/version)
+	
+ $ rbenv gemset active
+   ckeditor_sandbox global
+	
+<tt>$ cd /path/where/you/horde/code</tt>
 
-* Ruby version
+<tt>$ rails new ckeditor_dev</tt>
 
-* System dependencies
+<tt>$ cd ckeditor_dev</tt>
 
-* Configuration
+<tt>$ rails g scaffold Memo title:string body:text</tt>
 
-* Database creation
+<tt>$ rake db:migrate</tt>
 
-* Database initialization
+Add <tt>ckeditor</tt> to Gemfile and run the <tt>bundle</tt> command.
 
-* How to run the test suite
+Add <tt>//= require ckeditor/init</tt> to application.js
 
-* Services (job queues, cache servers, search engines, etc.)
+In app/views/memo/_form.html.erb, change <tt>f.text_area</tt> to <tt>f.cktext_area</tt>.
 
-* Deployment instructions
+Start the rails server and go to /memos/new and you should see CKEditor on behalf of the <tt>body</tt> attribute.
 
-* ...
+==== pbckcode
+<tt>$ mkdir -p app/assets/javascripts/ckeditor/plugins</tt>
 
+<tt>$ ln -s /your/repo/path/pbckcode app/assets/javascripts/ckeditor/plugins/</tt>
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Fix your config.js (see app/assets/javascripts/ckeditor/config.js)
